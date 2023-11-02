@@ -74,11 +74,11 @@ createScatterplot <- function(data, group_var, x_var, y_var) {
   data_grouped <- data %>%
     group_by({{group_var}})
   
-  #Filters out any NA values
+  # Filters out any NA values
   data_filtered <- data_grouped %>%
     filter(!is.na({{y_var}}))
   
-  #Plots graph
+  # Plots graph
   ggplot(data_filtered, aes(x = {{x_var}}, y = {{y_var}}, color = {{group_var}})) +
     geom_point() +
     geom_line() +
@@ -97,7 +97,7 @@ character variables and numerical variables for us to create a
 scatterplot with.
 
 ``` r
-# This code creates a dataset
+# This code creates a custom dataset to use as an example
 custom_data <- data.frame(
   Group = c("A", "A", "B", "B", "C", "C"),
   Group2 = c(1, 2, 1, 2, 1, 2),
@@ -117,7 +117,8 @@ print(custom_data)
     ## 6     C      2 6 12
 
 Now let’s try creating a scatterplot with x-axis as “X” and y-axis as
-“Y”, that is grouped by “Group”
+“Y”, which are both numerical variables, that is grouped by “Group”,
+which is a character variable.
 
 ``` r
 # Let's use our function
@@ -148,14 +149,21 @@ testthat package.
 suppressMessages(library(testthat))
 ```
 
-Now let’s create some tests! In the first test, we will check to see if
-we get a plot when we have proper types of variables with no NA’s. In
-the second test, we will see if we can still get a plot, even though we
-have NA values. The third test will check if using a wrong type of
-variable will give us the expected error message. In this case, since we
-have a non-numerical variable for our y-axis, we should be getting the
-error message: “y_var must be a numeric variable.” Lastly, the fourth
-test will check if we still get a plot when our vector length is 0.
+Now let’s create some tests!
+
+In the first test, we will check to see if we get a plot when we have
+proper types of variables with no NA’s.
+
+In the second test, we will see if we can still get a plot, even though
+we have NA values.
+
+The third test will check if using a wrong type of variable will give us
+the expected error message. In this case, since we have a non-numerical
+variable for our y-axis, we should be getting the error message: “y_var
+must be a numeric variable.”
+
+Lastly, the fourth test will check if we still get a plot when our
+vector length is 0.
 
 ``` r
 test_that("createScatterplot function tests", {
@@ -198,6 +206,6 @@ test_that("createScatterplot function tests", {
 })
 ```
 
-    ## Test passed 🥇
+    ## Test passed 🎉
 
 It looks like we were able to pass all of the tests!
